@@ -11,7 +11,7 @@ observationRouter.route('/')
     Observations.find({})
     .then((observations) => {
         res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
+        res.set({'Content-Type': 'application/json'});
         res.json(observations);
     }, (err) => next(err))
     .catch((err) => next(err));
@@ -27,21 +27,26 @@ observationRouter.route('/')
     .catch((err) => next(err));
 })
 .put((req, res, next) => {
+    res.set({'Content-Type': 'application/json'});
     Observations.findOne({point: req.body.point}, function (err, doc) {
         if (err) next(err);
-        doc.temperatures.push({value:req.body.value})
-        doc.save()
-            .then((observation) => {
-                console.log('Observation Updated ', observation);
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(observation);
-            })
-            .catch((err) => next(err));
+        if(doc){
+            doc.temperatures.push({value:req.body.value})
+            doc.save()
+                .then((observation) => {
+                    console.log('Observation Updated ', observation);
+                    res.statusCode = 200;
+                    res.json(observation);
+                })
+                .catch((err) => next(err));
+        } else {
+            res.statusCode = 202;
+            res.json({});
+        }
     })
 })
 .delete((req, res, next) => {
-    Observations.remove({})
+    Observations.deleteMany({})
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
