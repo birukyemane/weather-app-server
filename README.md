@@ -3,7 +3,8 @@
 
 # features 
 
-* REST APIs for fetching and updating temperatrue observations
+* provides REST APIs for fetching and updating temperatrue observations
+* The data is permanently saved to a database
 
 # Technolgies
 * Express
