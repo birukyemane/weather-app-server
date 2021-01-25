@@ -7,7 +7,7 @@
 
 # Technolgies
 * Express
-* MongoDB (**MongoDB Atlas** is used not need to run database locally)
+* MongoDB (**MongoDB Atlas** is used)
 
 # How to run the app
 * clone the repo from Github
